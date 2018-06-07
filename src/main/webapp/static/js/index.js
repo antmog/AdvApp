@@ -1,0 +1,1 @@
+$("#carouselItem").first().addClass( "active" );
