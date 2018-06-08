@@ -2,8 +2,9 @@ package com.infosystem.advertisment.jms;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.infosystem.advertisment.ejb.NotificationService;
-import com.infosystem.advertisment.model.Item;
+import com.infosystem.advertisment.dto.AdvTariffDto;
+import com.infosystem.advertisment.ejb.AdvService;
+
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
@@ -26,7 +27,7 @@ public class NewsListener implements MessageListener {
     private final static Logger LOGGER = Logger.getLogger(NewsListener.class.toString());
 
     @EJB
-    private NotificationService notificationService;
+    private AdvService advService;
 
     @Override
     public void onMessage(Message msg) {
@@ -39,14 +40,14 @@ public class NewsListener implements MessageListener {
                 final String text = ((TextMessage) msg).getText();
                 LOGGER.info(() -> "textMessage Received: " + text);
 
-                Item item = jacksonMapper.readValue(text, Item.class);
-                List<Item> notificationData = new ArrayList<>();
-                LOGGER.info(() -> "after Jackson: " + item.getItemName());
-                LOGGER.info(() -> "after Jackson: " + item.getDescription());
+                AdvTariffDto advTariffDto = jacksonMapper.readValue(text, AdvTariffDto.class);
+                List<AdvTariffDto> notificationData = new ArrayList<>();
+                LOGGER.info(() -> "after Jackson: " + advTariffDto.getName());
+                LOGGER.info(() -> "after Jackson: " + advTariffDto.getDescription());
                 for (int i = 0; i < 5; i++) {
-                    notificationData.add(item);
+                    notificationData.add(advTariffDto);
                 }
-                notificationService.updateData(notificationData);
+                advService.updateData(notificationData);
             } catch (final JMSException e) {
                 throw new RuntimeException(e);
             } catch (IOException e) {

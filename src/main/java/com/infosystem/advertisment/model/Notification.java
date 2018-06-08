@@ -1,16 +1,18 @@
 package com.infosystem.advertisment.model;
 
+import com.infosystem.advertisment.dto.AdvTariffDto;
+
 import java.util.List;
 
 public class Notification {
 
-    private List<Item> notificationData;
+    private List<AdvTariffDto> notificationData;
 
-    public void setData(List<Item> notificationData) {
+    public void setData(List<AdvTariffDto> notificationData) {
         this.notificationData = notificationData;
     }
 
-    public List<Item> getData() {
+    public List<AdvTariffDto> getData() {
         return notificationData;
     }
 }

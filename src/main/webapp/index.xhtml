@@ -5,14 +5,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
 <h:head>
     <title>Title</title>
     <link rel="stylesheet" href="static/vendors/bootstrap-4.1.0/css/bootstrap.min.css"></link>
     <link rel="stylesheet" href="static/css/carousel.css"></link>
 </h:head>
-<h:body>
-<p id = "p"> #{advertismentBean.itemList} </p>
+<h:body id="gg">
+    <p:outputLabel id="prr" value="#{advBean.itemList}" />
+    <p id="p">#{advBean.itemList}</p>
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <a class="navbar-brand" href="#">Carousel</a>
@@ -51,14 +54,14 @@
             <li data-target="#myCarousel" data-slide-to="4" class=""></li>
         </ol>
         <div class="carousel-inner">
-            <ui:repeat id="carouselItems" value="#{advertismentBean.itemList}" var="item">
+            <ui:repeat id="carouselItems" value="#{advBean.itemList}" var="item">
                 <div class="carousel-item" id="carouselItem">
                     <img class="first-slide"
                          src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
                          alt="First slide"></img>
                     <div class="container">
                         <div class="carousel-caption text-left">
-                            <h1>#{item.itemName}</h1>
+                            <h1>#{item.name}</h1>
                             <p>#{item.description}</p>
                             <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
                         </div>
@@ -78,8 +81,8 @@
 
     <h:form>
         <f:websocket channel="tariffList">
-            <f:ajax event="update" onevent="updateSmth()" />
-            <!--<f:ajax event="update" render=":p" />-->
+            <f:ajax event="update" render=":prr" />
+            <f:ajax event="update" render="gg:p" />
         </f:websocket>
     </h:form>
 
